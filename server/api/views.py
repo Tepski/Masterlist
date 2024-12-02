@@ -1,0 +1,31 @@
+from django.shortcuts import render
+from . models import Category
+from . serializers import CategorySerializer
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+
+# Create your views here.
+@api_view(["GET"])
+def get_values(request):
+    category = Category.objects.all()
+    srlzr = CategorySerializer(category, many=True)
+    return Response(srlzr.data)
+
+@api_view(["POST"])
+def set_values(request):
+    srlzr = CategorySerializer(data=request.data)
+    if srlzr.is_valid():
+        srlzr.save()
+
+    return Response(srlzr.data, status=status.HTTP_201_CREATED)
+
+@api_view(["DELETE"])
+def delete_value(request, pk):
+    try:
+        data = Category.objects.get(pk=pk)
+    except Category.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    data.delete()
+    return Response({"Message": "Item deleted Succesfully"}, status=status.HTTP_204_NO_CONTENT)
