@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from . models import Category
 from . serializers import CategorySerializer
 from rest_framework.decorators import api_view
@@ -10,7 +9,13 @@ from rest_framework import status
 def get_values(request):
     category = Category.objects.all()
     srlzr = CategorySerializer(category, many=True)
-    print(category)
+    for cat in category:
+        ar_category = cat.ar_category
+        area = cat.area
+        abnormality = cat.abnormality
+        nature_of_abnormality = cat.nature_of_abnormality
+        affected_item = cat.affected_item
+        print(f"ar_category: {ar_category}, area: {area}, abnormality: {abnormality}, nature_of_abnormality: {nature_of_abnormality}, affected_item: {affected_item}")
     return Response(srlzr.data)
 
 @api_view(["POST"])
@@ -19,11 +24,13 @@ def set_values(request):
     if srlzr.is_valid():
         srlzr.save()
         srlzr.instance.ar_no = srlzr.instance.id + 2  # Assign ar_no as id + 2
+        srlzr.instance.link = f"{srlzr.instance.id}"
         srlzr.instance.save()
 
-        #ar_category area abnormality nature_of_abnormality affected_item
+        # ar_category area abnormality nature_of_abnormality affected_item
 
-        print(srlzr.data)
+        for cat in Category.objects.all():
+            print(cat.ar_category, cat.area, cat.abnormality, cat.nature_of_abnormality)
 
         return Response(srlzr.data, status=status.HTTP_201_CREATED)
     else:

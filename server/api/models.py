@@ -29,6 +29,7 @@ class Category(models.Model):
     ar_no = models.CharField(max_length=100, null=True)
     area = models.CharField(max_length=5, choices=areaChoices)
     ar_category = models.CharField(max_length=255)
+    abnormality = models.CharField(max_length= 120)
     nature_of_abnormality = models.CharField(max_length=400, null=True, blank=True, default=None)
     affected_item = models.CharField(max_length=500, blank=True, null=True)
     level = models.CharField(max_length=3, choices=intChoices, default="One")
