@@ -14,10 +14,19 @@ class Category(models.Model):
     CARContent = ["FOR CAR", "SELF RESOLVE"]
     CAR = {car: car for car in CARContent}
 
-    statusContent = ["OPEN", "FOR CREATION"]
+    statusContent = [
+        "CAR CREATION",
+        "UNDER REVIEW",
+        "APPROVED",
+        "IMPLEMENTATION",
+        "VALIDATION",
+        "OPEN",
+        "CLOSED",
+    ]
     statusChoices = {status: status for status in statusContent}
 
-    link = models.CharField(max_length=1000)
+    link = models.CharField(max_length=255, null=True)
+    ar_no = models.CharField(max_length=100, null=True)
     area = models.CharField(max_length=5, choices=areaChoices)
     ar_category = models.CharField(max_length=255)
     nature_of_abnormality = models.CharField(max_length=400, null=True, blank=True, default=None)
@@ -25,14 +34,19 @@ class Category(models.Model):
     level = models.CharField(max_length=3, choices=intChoices, default="One")
     created = models.CharField(max_length=10)
     detection_process = models.CharField(max_length=500)
-    function = models.CharField(max_length=3)
+    function = models.CharField(max_length=10)
     incharge = models.CharField(max_length=255)
     self_resolve_for_car = models.CharField(max_length=12, choices=CAR)
-    status = models.CharField(max_length=12, choices=statusChoices)
+    status = models.CharField(max_length=14, choices=statusChoices)
     countermeasure = models.CharField(max_length=255, null=True, blank=True)
     fanout = models.BooleanField(default=True)
     remarks = models.CharField(max_length=255, null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        if self.ar_no != None:
+            return self.ar_no
+        return self.ar_category
 
     # The world will change the time that "The one who must not be named" gets elected a chair in the gabinet
     # If the world is ending I wanna be next to you
