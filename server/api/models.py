@@ -8,7 +8,7 @@ class Category(models.Model):
         "Two": 2
     }
 
-    areaContent = ["20CY", "21MY", "CT1", "CT2", "CT3", "CT4", "OT", "PNT", "PZT"]
+    areaContent = ["20CY", "21MY", "CT1", "CT2", "CT3", "CT4", "OT", "PNT", "PZT", "WH", "IQC", "OQC"]
     areaChoices = {item: item for item in areaContent}
 
     CARContent = ["FOR CAR", "SELF RESOLVE"]
@@ -25,15 +25,15 @@ class Category(models.Model):
     ]
     statusChoices = {status: status for status in statusContent}
 
-    link = models.CharField(max_length=255, null=True)
-    ar_no = models.CharField(max_length=100, null=True)
+    link = models.CharField(max_length=255, blank=True)
+    ar_no = models.CharField(max_length=100, blank=True)
     area = models.CharField(max_length=5, choices=areaChoices)
     ar_category = models.CharField(max_length=255)
     abnormality = models.CharField(max_length= 120)
-    nature_of_abnormality = models.CharField(max_length=400, null=True, blank=True, default=None)
-    affected_item = models.CharField(max_length=500, blank=True, null=True)
+    nature_of_abnormality = models.CharField(max_length=400, blank=True, default=None)
+    affected_item = models.CharField(max_length=500, blank=True)
     level = models.CharField(max_length=3, choices=intChoices, default="One")
-    created = models.CharField(max_length=10)
+    created = models.CharField(max_length=10, null=True, blank=True)
     detection_process = models.CharField(max_length=500)
     function = models.CharField(max_length=10)
     incharge = models.CharField(max_length=255)
