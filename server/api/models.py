@@ -1,6 +1,4 @@
 from django.db import models
-import time
-
 class Category(models.Model):
 
     intChoices = {
@@ -27,6 +25,7 @@ class Category(models.Model):
 
     link = models.CharField(max_length=255, blank=True)
     ar_no = models.CharField(max_length=100, blank=True)
+    car_no = models.CharField(max_length=20,  blank=True, null=True)
     area = models.CharField(max_length=5, choices=areaChoices)
     ar_category = models.CharField(max_length=255)
     abnormality = models.CharField(max_length= 120)
@@ -48,10 +47,3 @@ class Category(models.Model):
         if self.ar_no != None:
             return self.ar_no
         return self.ar_category
-
-    # The world will change the time that "The one who must not be named" gets elected a chair in the gabinet
-    # If the world is ending I wanna be next to you
-    # Surprisingly, we humans have exceeded the life expectation from a study made in 1944
-    # It is said that by the 20th century, shortage of supplies and necessities are expected and the population of earth size down to 2billion
-    # Right now, nothing seem to have depleted, everything is going snoothly
-    
